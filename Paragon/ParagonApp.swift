@@ -11,7 +11,9 @@ import SwiftUI
 struct ParagonApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                ListView()
+            }
         }
     }
 }
