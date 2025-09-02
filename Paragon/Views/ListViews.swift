@@ -34,7 +34,7 @@ struct ListView: View {
             }
         }
         .navigationTitle("Todo List 📋")
-        .navigationBarItems(
+        .navigationBarItems( 
             leading: EditButton(),
             trailing: NavigationLink(
                 "Add",
