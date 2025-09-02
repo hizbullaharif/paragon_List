@@ -11,7 +11,11 @@ struct AddListView: View {
 
     @State var listName: String = ""
 
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var listViewModel: ListViewModel
+
     var body: some View {
+
         VStack {
             TextField("List Name", text: $listName)
                 .padding(10)
@@ -21,6 +25,7 @@ struct AddListView: View {
                 .multilineTextAlignment(.leading)
 
             Button {
+                addToList()
             } label: {
                 Text("Add")
                     .font(.headline)
@@ -36,8 +41,17 @@ struct AddListView: View {
         .padding(10)
         .navigationTitle("Add to List 🖋️")
     }
+
+    func addToList() {
+        guard !listName.isEmpty else { return }
+        listViewModel.addToList(name: listName)
+        presentationMode.wrappedValue.dismiss()
+    }
 }
 
 #Preview {
-    AddListView()
+    NavigationView {
+        AddListView()
+    }
+
 }

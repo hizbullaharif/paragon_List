@@ -9,30 +9,15 @@ import SwiftUI
 
 struct ListRowView: View {
     let listItem: ItemListModel
-
-    @State private var isCompleted: Bool = false
-    var onToggle: ((Bool) -> Void)? = nil
-    
-
     var body: some View {
         HStack(spacing: 12) {
-            Button {
-                withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
-                    isCompleted.toggle()
-                    onToggle?(isCompleted)
-                }
-            } label: { 
-                Image(
-                    systemName: isCompleted ? "checkmark.circle.fill" : "circle"
-                )
-                .foregroundStyle(isCompleted ? .green : .secondary)
-                .imageScale(.large)
-                .contentTransition(.symbolEffect)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(
-                listItem.isCompleted ? "Mark as incomplete" : "Mark as complete"
+            Image(
+                systemName: listItem.isCompleted
+                    ? "checkmark.circle.fill" : "circle"
             )
+            .foregroundStyle(listItem.isCompleted ? .green : .secondary)
+            .imageScale(.large)
+            .contentTransition(.symbolEffect)
 
             Text(listItem.name)
                 .font(.title3.weight(.medium))
@@ -50,21 +35,17 @@ struct ListRowView: View {
                 .fill(Color.secondary.opacity(0.12))
         )
         .contentShape(Rectangle())
-        .onTapGesture {
-            withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
-                isCompleted.toggle()
-                onToggle?(isCompleted)
-            }
-        }
         .accessibilityElement(children: .combine)
-        .accessibilityValue(listItem.isCompleted ? "Completed" : "Not completed")
+        .accessibilityValue(
+            listItem.isCompleted ? "Completed" : "Not completed"
+        )
     }
 }
 
 #Preview {
     VStack(spacing: 12) {
         ListRowView(listItem: ItemListModel(name: "abc", isCompleted: true))
-        
+
     }
     .padding()
 }
